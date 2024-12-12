@@ -1,0 +1,29 @@
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+# Load the image
+image = cv2.imread('D:/ODDSEM/OSTT/Screenshot.png')
+# Function to display image using Matplotlib
+def display_image(title, img):
+plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+plt.title(title)
+plt.axis('off')
+plt.show() 
+# Get the dimensions of the image
+(h, w) = image.shape[:2]
+# Define the center of the image (around which the rotation will occur)
+center = (w // 2, h // 2)
+# Rotation angle in degrees (clockwise rotation for positive angle)
+rotation_angle = 45
+# Scaling factor (1.0 means no scaling, < 1.0 to shrink, > 1.0 to enlarge)
+scale_factor = 1.5
+# Create the rotation matrix with scaling
+rotation_matrix = cv2.getRotationMatrix2D(center, rotation_angle, scale_factor)
+# Apply the rotation and scaling using warpAffine
+rotated_scaled_image = cv2.warpAffine(image, rotation_matrix, (w, h))
+# Display the original and transformed images
+plt.figure(figsize=(10, 5))
+plt.subplot(1, 2, 1)
+display_image("Original Image", image)
+plt.subplot(1, 2, 2)
+display_image("Rotated and Scaled Image", rotated_scaled_image)
